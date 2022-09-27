@@ -21,7 +21,7 @@ order_items= spark.read \
             .schema(order_item_schema) \
             .load()
 
-display(order_items)
+#display(order_items)
 
 
 # COMMAND ----------
@@ -108,49 +108,49 @@ display(orders_join)
 
 # COMMAND ----------
 
-.write.bucketBy(10, "num1").saveAsTable("bucketed_large_table_1")
+# .write.bucketBy(10, "num1").saveAsTable("bucketed_large_table_1")
 
 # COMMAND ----------
 
-# MAGIC %sql
-# MAGIC create table retail_db_cleanse.orders as 
-# MAGIC select * from retail_db_ingestion.orders
+# %sql
+# create table retail_db_cleanse.orders as 
+# select * from retail_db_ingestion.orders
 
 # COMMAND ----------
 
-
-
-# COMMAND ----------
-
-orders_tbl.write \
-      .bucketBy(4,'order_id') \
-      .format("parquet") \
-      .option("compression","snappy") \
-      .option("mode","overwrite") \
-      .option("path",'/FileStore/tables/bucket/') \
-      .save()
-
-# COMMAND ----------
-
-orders_tbl.coalesce(1).write.bucketBy(4,'order_id').mode("overwrite").saveAsTable("retail_db_cleanse.orders")
-
-# COMMAND ----------
-
-orders_tbl.coalesce(1) \
-            .write \
-          .bucktedBy(4,'order_id') \
-          .mode('overwride') \
-          .option('format','parquet') \
-          .saveAsTable('retail_db_cleanse.orders')
 
 
 # COMMAND ----------
 
-order_items_tbl.coalesce(1) \
-          .bucktedBy(4,'order_item_order_id') \
-          .mode('overwride') \
-          .option('format','parquet') \
-          .saveAsTable('retail_db_cleanse.order_items')
+# orders_tbl.write \
+#       .bucketBy(4,'order_id') \
+#       .format("parquet") \
+#       .option("compression","snappy") \
+#       .option("mode","overwrite") \
+#       .option("path",'/FileStore/tables/bucket/') \
+#       .save()
+
+# COMMAND ----------
+
+# orders_tbl.coalesce(1).write.bucketBy(4,'order_id').mode("overwrite").saveAsTable("retail_db_cleanse.orders")
+
+# COMMAND ----------
+
+# orders_tbl.coalesce(1) \
+#             .write \
+#           .bucktedBy(4,'order_id') \
+#           .mode('overwride') \
+#           .option('format','parquet') \
+#           .saveAsTable('retail_db_cleanse.orders')
+
+
+# COMMAND ----------
+
+# order_items_tbl.coalesce(1) \
+#           .bucktedBy(4,'order_item_order_id') \
+#           .mode('overwride') \
+#           .option('format','parquet') \
+#           .saveAsTable('retail_db_cleanse.order_items')
 
 # COMMAND ----------
 
